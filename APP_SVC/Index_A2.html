@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myAngularApplication">
+<head>
+    <title>Angular using separate files</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js" type="text/JavaScript"></script>
+
+    <script src="app/app.js" type="text/JavaScript"></script>
+    <script src="app/book/booksController.js" type="text/JavaScript"></script>
+    <script src="app/book/localBooksService.js" type="text/JavaScript"></script>
+    <script src="app/book/remoteBooksService.js" type="text/JavaScript"></script>
+
+</head>
+<body ng-controller="booksController">
+    <div>
+        <!-- Simple test this is using Angular wherein module ng-app is found and initialised corectly -->
+        {{2+2}}
+        <br />
+        <!-- content from booksController, the vriable within controller has been attached to $scope -->
+        <!-- NB: {{}} is a short hand for ng-bind="xxx" ng-bind is One Way binding, ng-model gives Two Way binding -->
+        {{message}}
+        <br />
+
+        <!-- This demonistrates accessing variables within Controller that are not atached to $scope -->
+        <h4 ng-controller="booksController as booksCtrl">
+            {{ booksCtrl.greeting }}
+
+        </h4>
+
+        <input type="button" ng-click="fetchBooks()" value="Fetch Local" />
+        <input type="button" ng-click="fetchBooksFromServer()" value="Fetch Remote" />
+        <p ng-hide="books.length > 0">No Books Available</p>
+        <table class="table table-striped" ng-show="books.length > 0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Book</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="book in books | orderBy: ID"> <!-- The | (pipe) indicates to use an Angular filter. Use - to order descending, e.g | orderBy: -ID -->
+                    <td>{{ book.ID }}</td>
+                    <td>{{ book.BookName}}</td>
+                    <td>{{ book.AuthorName | lowercase}}</td> <!-- The | (pipe) indicates to use an Angular filter. E.g {{ today | date:'dd, MMMM, yyyy' }} -->
+                    <td>{{ book.ISBN}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Select Country
+            <!-- ng-options is specifically for use with Dropdown lists <select> -->
+            <select ng-model="countries" ng-options="country for country in countries" ></select>
+        </p>
+
+        {{ books | json }}
+
+    </div>
+
+</body>
+</html>

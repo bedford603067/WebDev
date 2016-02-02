@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html ng-app="myAngularApplication">
+<head>
+    <title>Sample Angular Application</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="Scripts/angular.min.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/book/localBooksService.js"></script>
+    <script src="app/book/booksController.js"></script>
+    <script src="app/book/createBookController.js"></script>
+
+</head>
+<body ng-controller="booksController">
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3 ng-bind="message"></h3>
+
+                <p ng-hide="books.length > 0">No books available</p>
+
+                <div ng-hide="editBook != null">
+                    <form name="frmAddBook" novalidate
+                          ng-submit="addBook(frmAddBook)" class="form-inline">
+                        <div class="form-group">
+                            <label for="inputBookName">
+                                Book Name
+                            </label>
+                            <input id="inputBookName" name="inputBookName" type="text" placeholder="Book Name"
+                                   ng-model="book.BookName" class="form-control" required
+                                   ng-class="{'erroneous-field' :  frmAddBook.inputBookName.$dirty && frmAddBook.inputBookName.$invalid}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAuthorName">
+                                Author Name
+                            </label>
+                            <input id="inputAuthorName" type="text" placeholder="Author Name"
+                                   ng-model="book.AuthorName" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputISBN">
+                                ISBN
+                            </label>
+                            <input id="inputISBN" type="text" placeholder="ISBN"
+                                   ng-model="book.ISBN" class="form-control" required />
+                        </div>
+
+                        <input type="submit" class="btn btn-success" value="Create">
+
+                    </form>
+
+                </div>
+
+                <div ng-show="editBook != null">
+                    <form class="form-inline" name="frmEditBook" novalidate>
+
+                        <input type="hidden" ng-model="editbook.ID" />
+
+                        <div class="form-group">
+                            <label for="inputBookName">
+                                Book Name
+                            </label>
+                            <input id="inputBookName" type="text" placeholder="Book Name"
+                                   ng-model="editBook.BookName" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAuthorName">
+                                Author Name
+                            </label>
+                            <input id="inputAuthorName" type="text" placeholder="Author Name"
+                                   ng-model="editBook.AuthorName" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputISBN">
+                                ISBN
+                            </label>
+                            <input id="inputISBN" type="text" placeholder="ISBN"
+                                   ng-model="editBook.ISBN" class="form-control" required />
+                        </div>
+
+                        <input type="submit" class="btn btn-success" value="Update" ng-click="updateBook(frmEditBook)">
+                        <input type="Button" class="btn btn-info" value="Cancel" ng-click="cancelEdit()">
+
+                    </form>
+                </div>
+
+                <table class="table table-striped" ng-show="books.length > 0">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                BookName
+                            </th>
+                            <th>
+                                Author Name
+                            </th>
+                            <th>
+                                ISBN
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in books | orderBy: '-ID'">
+                            <td>
+                                {{ item.ID}}
+                            </td>
+                            <td>
+                                {{item.BookName}}
+                            </td>
+                            <td>
+                                {{item.AuthorName}}
+                            </td>
+                            <td>
+                                {{item.ISBN}}
+                            </td>
+                            <td>
+                                <input type="Button" class="btn btn-info"
+                                       value="Edit" ng-click="setEditBook(item)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

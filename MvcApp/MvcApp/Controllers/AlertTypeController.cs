@@ -10,11 +10,17 @@ namespace MvcApp
 {
     public class AlertTypeController : Controller
     {
-        // GET: AlertType
-        public ActionResult Index()
+        private IEnumerable<Models.AlertType> GetAlertTypes()
         {
             string connection = "mongodb://localhost:27017"; ;
             IEnumerable<Models.AlertType> list = new DAL.AlertingRepository(connection).GetAlertTypes();
+            return list;
+        }
+
+        // GET: AlertType
+        public ActionResult Index()
+        {
+            IEnumerable<Models.AlertType> list = GetAlertTypes();
             return View(list);
         }
 
@@ -30,18 +36,19 @@ namespace MvcApp
         // GET: AlertType/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            IEnumerable<Models.AlertType> list = GetAlertTypes();
+            return View(list.ToList().Find(p => p.Id == id));
         }
 
         // GET: AlertType/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Models.AlertType());
         }
 
         // POST: AlertType/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Models.AlertType model)
         {
             try
             {
@@ -58,12 +65,13 @@ namespace MvcApp
         // GET: AlertType/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            IEnumerable<Models.AlertType> list = GetAlertTypes();
+            return View(list.ToList().Find(p => p.Id == id));
         }
 
         // POST: AlertType/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Models.AlertType model)
         {
             try
             {
@@ -80,7 +88,8 @@ namespace MvcApp
         // GET: AlertType/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            IEnumerable<Models.AlertType> list = GetAlertTypes();
+            return View(list.ToList().Find(p => p.Id == id));
         }
 
         // POST: AlertType/Delete/5

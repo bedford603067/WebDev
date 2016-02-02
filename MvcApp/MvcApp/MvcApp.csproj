@@ -374,6 +374,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\AlertType\Index.cshtml" />
+    <Content Include="Views\AlertType\Edit.cshtml" />
+    <Content Include="Views\AlertType\Create.cshtml" />
+    <Content Include="Views\AlertType\Delete.cshtml" />
+    <Content Include="Views\AlertType\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

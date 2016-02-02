@@ -31,6 +31,7 @@ namespace MvcApp.Controllers
         // PUT: api/Alerting/5
         public void Put(int id, [FromBody]string value)
         {
+
         }
 
         // DELETE: api/Alerting/5
